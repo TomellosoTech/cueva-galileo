@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Panorama</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv,
+        #panorama {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #viewDiv{
+            width:50%;
+            float:left;
+        }
+        #panorama{
+            width:50%;
+            float:left;
+        }
+        #panorama iframe{
+            width:100%;
+            height:100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+
+    <script src="https://js.arcgis.com/4.10/"></script>
+
+    <script>
+        require([
+        "esri/views/MapView",
+        "esri/WebMap"
+        ], function(
+        MapView, WebMap
+        ) {
+
+            /************************************************************
+            * Creates a new WebMap instance. A WebMap must reference
+            * a PortalItem ID that represents a WebMap saved to
+            * arcgis.com or an on-premise portal.
+            *
+            * To load a WebMap from an on-premise portal, set the portal
+            * url with esriConfig.portalUrl.
+            ************************************************************/
+            var webmap = new WebMap({
+                portalItem: { // autocasts as new PortalItem()
+                    id: "4e77916d5117475f88e786c60f0f87d5"
+                }
+            });
+
+            /************************************************************
+            * Set the WebMap instance to the map property in a MapView.
+            ************************************************************/
+            var view = new MapView({
+                map: webmap,
+                container: "viewDiv"
+            });
+
+            webmap.when(function () {
+                // This function will execute once the promise is resolved
+                console.log("webmap loaded successfully");
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div id="panorama"><iframe src="https://momento360.com/e/u/3fec748a091d404a985feda8118ebb28?utm_campaign=embed&utm_source=other&utm_medium=other&heading=0&pitch=0&field-of-view=75"></iframe></div>
+</body>
+
+</html>
